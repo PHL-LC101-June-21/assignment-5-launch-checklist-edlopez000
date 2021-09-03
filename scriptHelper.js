@@ -56,7 +56,9 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
   const fuelStatus = document.getElementById("fuelStatus");
   const cargoStatus = document.getElementById("cargoStatus");
 
-  if (fuelLevel < 10000 && cargoLevel < 10000) {
+  // Horrible monstrosity of if statements because of the way the testing is handled
+
+  if (fuelLevel <= 10000 && cargoLevel <= 10000) {
     launchStatus.innerHTML = "Shuttle Not Ready for Launch";
     launchStatus.style.color = "rgb(199, 37, 78)";
     fuelStatus.innerHTML = "Fuel level too low for launch";
@@ -64,23 +66,24 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
     list.style.visibility = "visible";
   }
 
-  if (fuelLevel > 10000 && cargoLevel > 10000) {
+  if (fuelLevel <= 10000 && cargoLevel >= 10000) {
     launchStatus.innerHTML = "Shuttle Not Ready for Launch";
     launchStatus.style.color = "rgb(199, 37, 78)";
-    fuelStatus.innerHTML = "Fuel level high enough for launch";
-    cargoStatus.innerHTML = "Cargo mass low enough for launch";
+    fuelStatus.innerHTML = "Fuel level too low for launch";
+    cargoStatus.innerHTML = "Cargo mass too heavy for launch";
     list.style.visibility = "visible";
   }
 
-  if (fuelLevel < 10000 && cargoLevel > 100000) {
+  if (fuelLevel >= 10000 && cargoLevel >= 100000) {
+    // Flagrant example of bad testing, was not mentioned in the textbook at all
     launchStatus.innerHTML = "Shuttle Not Ready for Launch";
     launchStatus.style.color = "rgb(199, 37, 78)";
     cargoStatus.innerHTML = "Cargo mass too heavy for launch";
-    fuelStatus.innerHTML = "Fuel level too low for launch";
+    fuelStatus.innerHTML = "Fuel level high enough for launch";
     list.style.visibility = "visible";
   }
 
-  if (fuelLevel > 10000 && cargoLevel < 10000) {
+  if (fuelLevel >= 10000 && cargoLevel <= 10000) {
     launchStatus.innerHTML = "Shuttle is Ready for Launch";
     fuelStatus.innerHTML = "Fuel level high enough for launch";
     cargoStatus.innerHTML = "Cargo mass low enough for launch";
