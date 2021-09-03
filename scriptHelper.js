@@ -10,28 +10,28 @@ function addDestinationInfo(
   moons,
   imageUrl
 ) {
-  // Here is the HTML formatting for our mission target div.
-  /*
-                <h2>Mission Destination</h2>
-                <ol>
-                    <li>Name: </li>
-                    <li>Diameter: </li>
-                    <li>Star: ${star}</li>
-                    <li>Distance from Earth: </li>
-                    <li>Number of Moons: </li>
-                </ol>
-                <img src="">
-   */
+  let content = document.getElementById("missionTarget");
+  content.innerHTML = `
+    <h2>Mission Destination</h2>
+      <ol>
+        <li>Name: ${name}</li>
+        <li>Diameter: ${diameter}</li>
+        <li>Star: ${star}</li>
+        <li>Distance from Earth: ${distance}</li>
+        <li>Number of Moons: ${moons}</li>
+      </ol>
+    <img src='${imageUrl}'>
+    `;
 }
 
 function validateInput(testInput) {
   if (testInput === "") {
     return "Empty";
-  } else if (isNaN(testInput)) {
-    return "Not a Number";
-  } else {
-    return "Is a Number";
   }
+  if (Number.isNaN(testInput)) {
+    return "Not a Number";
+  }
+  return "Is a Number";
 }
 
 function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
@@ -46,9 +46,9 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
     alert("Fuel level and Cargo mass should be numbers!");
   }
 
-  let launchStatus = document.getElementById("launchStatus");
-  let fuelStatus = document.getElementById("fuelStatus");
-  let cargoStatus = document.getElementById("cargoStatus");
+  const launchStatus = document.getElementById("launchStatus");
+  const fuelStatus = document.getElementById("fuelStatus");
+  const cargoStatus = document.getElementById("cargoStatus");
   list.style.visibility = "visible";
 
   pilot.innerHTML = `Pilot ${pilot} is ready for launch`;
@@ -73,23 +73,17 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
 }
 
 async function myFetch() {
-  let planetsReturned;
-
-  planetsReturned = await fetch(
+  const planetsReturned = await fetch(
     "https://handlers.education.launchcode.org/static/planets.json"
-  ).then(function (response) {
-    const jsonPromise = response.json();
+  ).then((response) => {
+    return response.json();
   });
-
-  jsonPromise = planetsReturned;
 
   return planetsReturned;
 }
 
 function pickPlanet(planets) {
-  let totalSelection = planets.length();
-  let min = 1;
-  return Math.floor(Math.random() * (totalSelection - min + 1)) + min;
+  return planetsReturned[Math.floor(Math.random() * planetsReturned.length)];
 }
 
 module.exports.addDestinationInfo = addDestinationInfo;
