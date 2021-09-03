@@ -3,6 +3,9 @@
 // const { formSubmission, myFetch } = require("./scriptHelper");
 
 window.addEventListener("load", () => {
+  const list = document.getElementById("faultyItems");
+  list.style.visibility = "hidden";
+
   let listedPlanets;
   // Set listedPlanetsResponse equal to the value returned by calling myFetch()
   let listedPlanetsResponse = myFetch();
@@ -14,16 +17,16 @@ window.addEventListener("load", () => {
       console.log(listedPlanets);
       // Below this comment call the appropriate helper functions to pick a planet fom the list of planets and add that information to your destination.
       let selectedPlanet = pickPlanet(listedPlanets);
+      console.log(selectedPlanet);
 
-      addDestination(
+      addDestinationInfo(
         document,
         selectedPlanet.name,
         selectedPlanet.diameter,
         selectedPlanet.star,
         selectedPlanet.distance,
         selectedPlanet.moons,
-        selectedPlanet.moons,
-        selectedPlanet.imageUrl
+        selectedPlanet.image
       );
     });
 
@@ -44,6 +47,7 @@ window.addEventListener("load", () => {
     const cargoMassValue = cargoMass.value;
 
     const list = document.getElementById("faultyItems");
+    list.style.visibility = "hidden";
 
     formSubmission(
       document,
